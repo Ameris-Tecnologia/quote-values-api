@@ -31,12 +31,10 @@ class Series(Base):
     pxqEquity = Column("pxqEquity", BigInteger, nullable=False)
     dataOk = Column("dataOk", Boolean, default=False)
     # pylint: disable=not-callable
-    createdAt = Column("createdAt", DateTime,
-                       nullable=False, default=func.now())
+    createdAt = Column("createdAt", DateTime, default=func.now())
     updatedAt = Column(
         "updatedAt",
         DateTime,
-        nullable=False,
         default=func.now(),
         onupdate=func.now(),
     )

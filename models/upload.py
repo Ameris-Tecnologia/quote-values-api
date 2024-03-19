@@ -29,12 +29,10 @@ class Upload(Base):
     traceId = Column("traceId", String(40), nullable=False)
 
     # pylint: disable=not-callable
-    createdAt = Column("createdAt", DateTime,
-                       nullable=False, default=func.now())
+    createdAt = Column("createdAt", DateTime, default=func.now())
     updatedAt = Column(
         "updatedAt",
         DateTime,
-        nullable=False,
         default=func.now(),
         onupdate=func.now(),
     )

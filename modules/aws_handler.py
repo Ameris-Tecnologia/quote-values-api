@@ -18,13 +18,12 @@ class AWS():
         """Function for create session secret-manager"""
         region_name = "us-east-1"
         # Create a Secrets Manager client
-        session = boto3.session.Session()
-        client = session.client(
-            service_name='secretsmanager',
+        session = boto3.Session(
             region_name=region_name,
             aws_access_key_id=AWS_SECRETS_ACCESS_KEY_ID,
             aws_secret_access_key=AWS_SECRETS_ACCESS_KEY
         )
+        client = session.client(service_name='secretsmanager')
         return client
 
     @staticmethod

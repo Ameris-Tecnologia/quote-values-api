@@ -11,7 +11,6 @@ class SeriesAttributesBaseSchema(BaseModel):
     """Series attributes base schema"""
     name: str
     bookValue: str
-    status: str
     economicValue: str
     institutionalContributors: int
     issuedQuotes: str
