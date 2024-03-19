@@ -1,6 +1,5 @@
 """Module for permission schema"""
-from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 from fastapi_jsonapi.schema_base import BaseModel, Field, RelationshipInfo
 
 if TYPE_CHECKING:
@@ -30,5 +29,3 @@ class PermissionSchema(PermissionAttributesBaseSchema):
         orm_mode = True
 
     id: int
-    createdAt: Optional[datetime] = Field(description="Create datetime")
-    updatedAt: Optional[datetime] = Field(description="Update datetime")
