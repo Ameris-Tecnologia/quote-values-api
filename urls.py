@@ -56,7 +56,7 @@ class RouterBuilder:
         name_path = self.name
         if name_path[-1] != "s":
             name_path = f"{self.name}s"
-        path_build = f"/{self.name}"
+        path_build = f"/{name_path}"
         tag_name = f"{self.name[0].upper()}{self.name[1:]}"
         RoutersJSONAPI(
             router=router,
