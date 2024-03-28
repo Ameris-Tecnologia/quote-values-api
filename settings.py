@@ -6,11 +6,8 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     """Class for settings of env vars"""
-    AUTH0_DOMAIN: str
-    AUTH0_ALGORITHMS: str
-    AUTH0_API_AUDIENCE: str
-    AUTH0_ISSUER: str
-    PYDEVD_WARN_SLOW_RESOLVE_TIMEOUT: int
+    AWS_SECRETS_ACCESS_KEY: str
+    AWS_SECRETS_ACCESS_KEY_ID: str
     ENV: str
 
     class Config:

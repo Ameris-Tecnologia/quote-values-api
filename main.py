@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
 from fastapi_jsonapi import init
 from modules.auth import VerifyToken
 
-from config import SQLA_ECHO, SQLA_URI, SQLA_USER_NAME, SQLA_PASS
+from database_connection import SQLA_ECHO, SQLA_URI, SQLA_USER_NAME, SQLA_PASS
 from extensions.sql_session import Base
 from urls import add_routes
 from settings import Settings

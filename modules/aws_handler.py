@@ -1,13 +1,13 @@
 """Module to access AWS client"""
 
-import os
-
+import json
 import boto3
 from botocore.exceptions import ClientError
+from settings import get_settings
 
 
-AWS_SECRETS_ACCESS_KEY_ID = os.environ.get("AWS_SECRETS_ACCESS_KEY_ID")
-AWS_SECRETS_ACCESS_KEY = os.environ.get("AWS_SECRETS_ACCESS_KEY")
+AWS_SECRETS_ACCESS_KEY_ID = get_settings().AWS_SECRETS_ACCESS_KEY_ID
+AWS_SECRETS_ACCESS_KEY = get_settings().AWS_SECRETS_ACCESS_KEY
 
 
 class AWS():
@@ -45,13 +45,11 @@ class AWS():
         # Your code goes here.
         return secret
 
-    @staticmethod
-    def update_secret(client, secret_name, updated_secret):
-        """Function for update secret"""
 
-        response = client.update_secret(
-            SecretId=secret_name,
-            SecretString=updated_secret
-        )
-
-        print(response)
+def get_secret_from_str(secret_name: str):
+    """Function for get secret from secret name"""
+    secrets = json.loads(AWS.get_secret(
+        AWS.create_session_secretsmanager(),
+        secret_name)
+    )
+    return secrets
