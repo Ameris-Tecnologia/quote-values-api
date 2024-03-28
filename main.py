@@ -4,17 +4,18 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 
-from fastapi import Depends, FastAPI
-from fastapi.security.api_key import APIKey
+from fastapi import FastAPI, Security
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
-
 from fastapi_jsonapi import init
-
+from modules.auth import VerifyToken
 
 from config import SQLA_ECHO, SQLA_URI, SQLA_USER_NAME, SQLA_PASS
 from extensions.sql_session import Base
-from urls import add_routes, settings, get_api_key
+from urls import add_routes
+from settings import Settings
 
+settings = Settings()
+auth = VerifyToken()
 
 async def sqlalchemy_init() -> AsyncEngine:
     """Function that connect database"""
@@ -65,11 +66,9 @@ if __name__ == "__main__":
 
 
 @app.get("/")
-def read_root(
-    _: APIKey = Depends(get_api_key),
-):
-    """Function that read root"""
-    return f"Hello from {settings.ENV}"
+def read_root(auth_result: str = Security(auth.verify)):
+    """A valid access token is required to access this route"""
+    return auth_result
 
 
 if __name__ == "__main__":

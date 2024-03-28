@@ -8,11 +8,8 @@ from typing import (
 from fastapi import (
     APIRouter,
     FastAPI,
-    Security,
-    HTTPException,
-    Depends
+    Security
 )
-from fastapi.security.api_key import APIKeyHeader
 from fastapi_jsonapi import RoutersJSONAPI
 from fastapi_jsonapi.atomic import AtomicOperations
 
@@ -26,21 +23,11 @@ from models.schemas.series_schema import SeriesSchema
 from models.schemas.upload_schema import UploadSchema
 from view_base import DetailViewBase, ListViewBase
 from settings import Settings
+from modules.auth import VerifyToken
+
 
 settings = Settings()
-
-API_KEY = settings.API_KEY
-API_KEY_NAME = settings.API_KEY_NAME
-api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=True)
-
-
-async def get_api_key(
-    api_key: str = Security(api_key_header),
-):
-    """Async function to get api key"""
-    if api_key == API_KEY:
-        return api_key
-    raise HTTPException(status_code=403)
+auth = VerifyToken()
 
 
 class RouterBuilder:
@@ -82,7 +69,7 @@ def add_routes(app: FastAPI) -> List[Dict[str, Any]]:
     ]
 
     router: APIRouter = APIRouter(
-        dependencies=[Depends(get_api_key)],
+        dependencies=[Security(auth.verify)]
     )
     RouterBuilder("fund", Fund, FundSchema).build(router)
     RouterBuilder("permission", Permission, PermissionSchema).build(router)
