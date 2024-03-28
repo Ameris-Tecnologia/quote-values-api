@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     AUTH0_API_AUDIENCE: str
     AUTH0_ISSUER: str
     PYDEVD_WARN_SLOW_RESOLVE_TIMEOUT: int
+    ENV: str
 
     class Config:
         """Class for env variables"""

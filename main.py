@@ -16,6 +16,8 @@ from settings import Settings
 
 settings = Settings()
 auth = VerifyToken()
+ambient = settings.ENV
+
 
 async def sqlalchemy_init() -> AsyncEngine:
     """Function that connect database"""
@@ -42,13 +44,24 @@ def create_app() -> FastAPI:
 
     :return: app
     """
+
     app_scope = FastAPI(
-        title="FastAPI and SQLAlchemy",
+        title="FastAPI and SQLAlchemy in DEV",
         debug=True,
         openapi_url="/openapi.json",
         docs_url="/docs",
+        redoc_url="/redoc",
         lifespan=lifespan
     )
+    if ambient != "DEV":
+        app_scope = FastAPI(
+            title="FastAPI and SQLAlchemy in PROD",
+            debug=False,
+            openapi_url=None,
+            docs_url=None,
+            redoc_url=None,
+            lifespan=lifespan
+        )
     add_routes(app_scope)
     init(app_scope)
     return app_scope
